@@ -17,15 +17,15 @@ import math
 import random
 
 forcing_list = [
-                'forcing_99%_days_99sites.feather'
+                'forcing_99%_days_99sites_newv1.feather'
                 ]
 attr_list = [
-             'attr_temp99%_days_99sites.feather'
+             'attr_temp99%_days_99sites_newv1.feather'
              ]
 
 Batch_list = [ 47]
 Hidden_list = [100, 100, 100]
-Randomseed = [ 1, 2, 3, 4, 5]
+Randomseed = [ 1]
 for seed in Randomseed:
     for f_list, a_list, b_list, h_list in zip(forcing_list, attr_list, Batch_list, Hidden_list):
 
@@ -48,7 +48,7 @@ for seed in Randomseed:
         BATCH_SIZE = b_list
         RHO = 365
         HIDDENSIZE = h_list
-        saveEPOCH = 100   # it was 50
+        saveEPOCH = 200   # it was 50
         Ttrain = [20101001, 20141001]  # Training period. it was [19851001, 19951001]
 
         #### Set hyperparameters for Pre-training the model #####
@@ -161,7 +161,10 @@ for seed in Randomseed:
                 torch.backends.cudnn.deterministic = True
                 torch.backends.cudnn.benchmark = False
 
-
+                print("optData: ", optData)
+                print("TempTarget: ", TempTarget)
+                print("forcing_path: ", forcing_path)
+                print("attr_path: ", attr_path)
 
                 # load data
                 df, x, y, c = master.loadData(optData, TempTarget, forcing_path, attr_path, out)  # df: CAMELS dataframe; x: forcings; y: streamflow obs; c:attributes
