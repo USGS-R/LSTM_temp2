@@ -1,0 +1,11 @@
+run_lstm_check_results.ipynb
+*.ipynb
+*.out
+.idea/*
+.ipynb_checkpoints/*
+__pycache__/*
+hydroDL/*/__pycache__/*
+hydroDL/*/.ipynb_checkpoints/*
+*.pyc
+*.sql
+
