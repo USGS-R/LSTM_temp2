@@ -10,8 +10,8 @@ import json
 from . import Dataframe
 
 # module variable
-tRange = [19800101, 20200101]
-tRangeobs = [19800101, 20200101]    #[19801001, 20161001] #  streamflow observations
+tRange = [20101001, 20161001]
+tRangeobs = [20101001, 20161001]    #[19801001, 20161001] #  streamflow observations
 tLst = utils.time.tRange2Array(tRange)
 tLstobs = utils.time.tRange2Array(tRangeobs)
 nt = len(tLst)
@@ -290,6 +290,7 @@ def calStatbasinnorm(x):  # for daily streamflow normalized by basin area and pr
 def calStatAll():
     statDict = dict()
     ##idLst = gageDict['id']
+    
     idLst = forcing_data['site_no'].unique()
     # usgs streamflow
     y = readUsgs(idLst)
