@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../') #('C://Users//fzr5082//Desktop//hydroDL-dev-master//hydroDL-dev-master')   #('../')
+sys.path.append('../') 
 from hydroDL import master, utils
 from hydroDL.master import default
 #from hydroDL.post import plot, stat
@@ -25,7 +25,7 @@ attr_list = [
 
 Batch_list = [ 47]
 Hidden_list = [100, 100, 100]
-Randomseed = [ 1]
+Randomseed = [7,8,9,10]
 for seed in Randomseed:
     for f_list, a_list, b_list, h_list in zip(forcing_list, attr_list, Batch_list, Hidden_list):
 
@@ -75,7 +75,7 @@ for seed in Randomseed:
         forcing_data =[]#pd.read_feather(forcing_path)
         attr_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'attr_new', a_list)
         attr_data =[]#pd.read_feather(attr_path)
-        camels.initcamels(forcing_data, attr_data, TempTarget, rootDatabase)  # initialize three camels module-scope variables in camels.py: dirDB, gageDict, statDict
+        camels.initcamels(forcing_path, attr_data, TempTarget, rootDatabase)  # initialize three camels module-scope variables in camels.py: dirDB, gageDict, statDict
 
 
 
