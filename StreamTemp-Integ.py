@@ -25,7 +25,7 @@ attr_list = [
 
 Batch_list = [ 47]
 Hidden_list = [100, 100, 100]
-Randomseed = [7,8,9,10]
+Randomseed = [8,9,10,11,12]
 for seed in Randomseed:
     for f_list, a_list, b_list, h_list in zip(forcing_list, attr_list, Batch_list, Hidden_list):
 
@@ -72,10 +72,14 @@ for seed in Randomseed:
         rootOut = os.path.join(os.path.sep, absRoot, 'TempDemo', 'FirstRun')  # Model output root directory: /data/rnnStreamflow
 
         forcing_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'Forcing_new', f_list)  # obs_18basins
-        forcing_data =[]#pd.read_feather(forcing_path)
         attr_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'attr_new', a_list)
-        attr_data =[]#pd.read_feather(attr_path)
-        camels.initcamels(forcing_path, attr_data, TempTarget, rootDatabase)  # initialize three camels module-scope variables in camels.py: dirDB, gageDict, statDict
+        if os.path.exists(os.path.join(os.path.sep, rootDatabase, 'SNTemp', 'Statistics_basinnorm.json')):
+          forcing_data =[]
+          attr_data =[]
+        else:
+          forcing_data = pd.read_feather(forcing_path)
+          attr_data = pd.read_feather(attr_path)	
+        camels.initcamels(forcing_data, attr_data, TempTarget, rootDatabase)  # initialize three camels module-scope variables in camels.py: dirDB, gageDict, statDict
 
 
 
@@ -173,7 +177,6 @@ for seed in Randomseed:
                 # ny: number of target variables, nc: number of constant attributes
                 nx = x.shape[-1] + c.shape[-1]  # update nx, nx = nx + nc
                 ny = y.shape[-1]
-                #path = os.path.join('G:\Farshid\CONUS_Temp\Example3\TempDemo\FirstRun\epochs2000_batch686_rho365_hiddensize100_Tstart20101001_Tend20141001\All-2010-2016\\model_Ep1500.pt')
                # model = torch.load(path)
                 # load model for training
                 if retrained == False:
