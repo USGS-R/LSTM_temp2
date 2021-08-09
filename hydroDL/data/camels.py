@@ -290,7 +290,6 @@ def calStatbasinnorm(x):  # for daily streamflow normalized by basin area and pr
 def calStatAll():
     statDict = dict()
     ##idLst = gageDict['id']
-    
     idLst = forcing_data['site_no'].unique()
     # usgs streamflow
     y = readUsgs(idLst)
@@ -503,7 +502,6 @@ class DataframeCamels(Dataframe):
         if type(varLst) is str:
             varLst = [varLst]
         # read ts forcing
-        #rootDatabase = os.path.join(os.path.sep, absRoot, 'scratch', 'SNTemp')
         inputfiles = os.path.join(forcing_path)   #   forcing_350days_T_S_GAGESII
         dfMain = pd.read_feather(inputfiles)
         inputfiles = os.path.join(attr_path)       #   attr_350days_T_S_GAGESII

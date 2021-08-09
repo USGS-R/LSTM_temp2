@@ -1,3 +1,5 @@
+#some of these may still be checked in; also using this
+#to ignore files when zipping repo for data release
 run_lstm_check_results.ipynb
 *.ipynb
 *.out
@@ -8,4 +10,5 @@ hydroDL/*/__pycache__/*
 hydroDL/*/.ipynb_checkpoints/*
 *.pyc
 *.sql
+
 

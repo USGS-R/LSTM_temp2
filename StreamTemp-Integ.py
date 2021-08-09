@@ -68,12 +68,12 @@ for seed in Randomseed:
 
         # Define root directory of database and output
         # Modify this based on your own location
-        rootDatabase = os.path.join(os.path.sep, absRoot, 'scratch', 'SNTemp')  # CAMELS dataset root directory: /scratch/Camels
+        rootDatabase = os.path.join(os.path.sep, absRoot, 'in')  # CAMELS dataset root directory: /scratch/Camels
         rootOut = os.path.join(os.path.sep, absRoot, 'TempDemo', 'FirstRun')  # Model output root directory: /data/rnnStreamflow
 
         forcing_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'Forcing_new', f_list)  # obs_18basins
         attr_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'attr_new', a_list)
-        if os.path.exists(os.path.join(os.path.sep, rootDatabase, 'SNTemp', 'Statistics_basinnorm.json')):
+        if os.path.exists(os.path.join(os.path.sep, rootDatabase, 'in', 'Statistics_basinnorm.json')):
           forcing_data =[]
           attr_data =[]
         else:
