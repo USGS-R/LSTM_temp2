@@ -16,16 +16,12 @@ import pandas as pd
 import math
 import random
 
-forcing_list = [
-                'forcing_99%_days_99sites_newv1.feather'
-                ]
-attr_list = [
-             'attr_temp99%_days_99sites_newv1.feather'
-             ]
+forcing_list = ['forcing_99%_days_99sites_newv1.feather']
+attr_list = ['attr_temp99%_days_99sites_newv1.feather']
 
 Batch_list = [ 47]
 Hidden_list = [100, 100, 100]
-Randomseed = [8,9,10,11,12]
+Randomseed = [8,9,10,11,12,13]
 for seed in Randomseed:
     for f_list, a_list, b_list, h_list in zip(forcing_list, attr_list, Batch_list, Hidden_list):
 
@@ -69,10 +65,10 @@ for seed in Randomseed:
         # Define root directory of database and output
         # Modify this based on your own location
         rootDatabase = os.path.join(os.path.sep, absRoot, 'in')  # CAMELS dataset root directory: /scratch/Camels
-        rootOut = os.path.join(os.path.sep, absRoot, 'TempDemo', 'FirstRun')  # Model output root directory: /data/rnnStreamflow
+        rootOut = os.path.join(os.path.sep, absRoot, 'output')  # Model output root directory: /data/rnnStreamflow
 
-        forcing_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'Forcing_new', f_list)  # obs_18basins
-        attr_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'attr_new', a_list)
+        forcing_path = os.path.join(os.path.sep, rootDatabase, 'forcing', f_list)  # obs_18basins
+        attr_path = os.path.join(os.path.sep, rootDatabase, 'attr', a_list)
         if os.path.exists(os.path.join(os.path.sep, rootDatabase, 'in', 'Statistics_basinnorm.json')):
           forcing_data =[]
           attr_data =[]
@@ -102,11 +98,11 @@ for seed in Randomseed:
         # define training options
         optTrain = default.update(default.optTrainCamels, miniBatch=[BATCH_SIZE, RHO], nEpoch=EPOCH, saveEpoch=saveEPOCH, seed=seed)
         # define output folder for model results
-        exp_name = 'TempDemo'
-        exp_disp = 'FirstRun'
+        exp_name = 'output'
+        #exp_disp = 'demo'
 
 
-        save_path = os.path.join(absRoot, exp_name, exp_disp, \
+        save_path = os.path.join(absRoot, exp_name, \
                     'epochs{}_batch{}_rho{}_hiddensize{}_Tstart{}_Tend{}_{}'.format(optTrain['nEpoch'], optTrain['miniBatch'][0],
                                                                                   optTrain['miniBatch'][1],
                                                                                   optModel['hiddenSize'],
@@ -115,7 +111,7 @@ for seed in Randomseed:
 
         ##############################################################
         # save path and out for saving results for when had some pretraining  ####
-        pre_save_path = os.path.join(absRoot, exp_name, exp_disp, \
+        pre_save_path = os.path.join(absRoot, exp_name, \
                                                  'epochs{}_batch{}_rho{}_hiddensize{}_Tstart{}_Tend{}'.format(
                                                      pre_EPOCH,
                                                      pre_BATCH_SIZE,
