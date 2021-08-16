@@ -61,7 +61,7 @@ forcing_temp_renamed = forcing_temp.rename(columns={"discharge(cfs)" : "00060_Me
 ```
 ### Explanation of different experiments
 
-At this point, you can decide which experiment to replicate.`experiments.csv` in the data release describes the various experiments run in this data release.  These columns are most important:
+At this point, you can decide which experiment to replicate. `experiments.csv` in the data release describes the various experiments run in this data release. These columns are most important:
 
 - train_filter: Apply this filter to forcing data to filter out training and test data
 - test_filter: apply this filter to get *only* the test data. Test/train time period split is handled internally in the modeling code when running, use this to extract sites for a particular test set when checking performance.
