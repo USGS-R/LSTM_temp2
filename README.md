@@ -73,7 +73,7 @@ To filter the sites and forcing data based on the first experiment in experiment
 attr_filtered = attr.query('dag >= 60')
 forcing_temp_renamed_filter = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered['site_no'])]
 forcing_temp_renamed_filter.reset_index().to_feather('in/forcing/forcing_99.feather', version = 1)
-attr_filtered.reset_index().to_feather('in/attr/attr_99.feather', version = 1)
+attr_filtered.reset_index().to_feather('input/attr/attr_99.feather', version = 1)
 ```
 
 Now you are almost ready to run the model code.
@@ -82,7 +82,7 @@ Now you are almost ready to run the model code.
 
 First, set the forcing file name, site attributes name, batch size and hidden layer 
 sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here,
-the directory (`in`) is specified elsewhere.
+the directory (`input`) is specified elsewhere.
 
 ```
 19 forcing_list = ['forcing_99.feather']

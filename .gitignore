@@ -1,6 +1,5 @@
 #some of these may still be checked in; also using this
 #to ignore files when zipping repo for data release
-run_lstm_check_results.ipynb
 *.ipynb
 *.out
 lstmbatch.out
@@ -14,5 +13,6 @@ hydroDL/*/.ipynb_checkpoints/
 *.sql
 *.feather
 TempDemo/
-in/
+input/
 tmp/
+output/
