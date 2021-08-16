@@ -61,7 +61,7 @@ forcing_temp_renamed = forcing_temp.rename(columns={"discharge(cfs)" : "00060_Me
 ```
 ### Explanation of different experiments
 
-At this point, you can decide which experiment to replicate.`experiments.csv` in the data release describes the various experiments run in this data release.  These columns are most important:
+At this point, you can decide which experiment to replicate. `experiments.csv` in the data release describes the various experiments run in this data release. These columns are most important:
 
 - train_filter: Apply this filter to forcing data to filter out training and test data
 - test_filter: apply this filter to get *only* the test data. Test/train time period split is handled internally in the modeling code when running, use this to extract sites for a particular test set when checking performance.
@@ -81,8 +81,8 @@ Now you are almost ready to run the model code.
 ## Run model
 
 First, set the forcing file name, site attributes name, batch size and hidden layer 
-sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here,
-the directory (`input`) is specified elsewhere.
+sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here;
+the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 
 ```
 19 forcing_list = ['forcing_99.feather']
