@@ -83,7 +83,7 @@ Now you are almost ready to run the model code.
 
 First, set the forcing file name, site attributes name, batch size and hidden layer 
 sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here,
-the directory (`in`) is specified elsewhere.
+the directories (`in/forcing` and `in/attr`) are specified elsewhere.
 
 ```
 19 forcing_list = ['forcing_99.feather']
