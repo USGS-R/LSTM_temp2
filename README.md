@@ -145,8 +145,8 @@ err = stat.statError(init_means, obs)
 attr_filtered_test = attr.query('dag == 60')
 attr_filtered
 forcing_temp_renamed_filter_test = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered_test['site_no'])]
-forcing_temp_renamed_filter_test.reset_index().to_feather('input/forcing_99_test.feather', version = 1)
-attr_filtered.reset_index().to_feather('input/attr_99_test.feather', version = 1)
+forcing_temp_renamed_filter_test.reset_index().to_feather('input/forcing/forcing_99_test.feather', version = 1)
+attr_filtered.reset_index().to_feather('input/attr/attr_99_test.feather', version = 1)
 ```
 
 On line 41 of StreamTemp-Integ.py, set the `Action` variable to [2] to only make prediction, not train
