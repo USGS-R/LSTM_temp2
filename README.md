@@ -71,7 +71,6 @@ At this point, you can decide which experiment to replicate.`experiments.csv` in
 To filter the sites and forcing data based on the first experiment in experiments.csv, and write the input files:
 ```
 attr_filtered = attr.query('dag >= 60')
-attr_filtered
 forcing_temp_renamed_filter = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered['site_no'])]
 forcing_temp_renamed_filter.reset_index().to_feather('in/forcing/forcing_99.feather', version = 1)
 attr_filtered.reset_index().to_feather('in/attr/attr_99.feather', version = 1)
