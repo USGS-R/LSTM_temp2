@@ -152,7 +152,7 @@ attr_filtered.reset_index().to_feather('input/attr_99_test.feather', version = 1
 On line 41 of StreamTemp-Integ.py, set the `Action` variable to [2] to only make prediction, not train
 ` 41         Action = [0, 2]`
 
-Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file names.
+Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file names, and run `StreamTemp-Integ.py` as described above.
  
 Now compare the predictions and observations as before:
 ```
