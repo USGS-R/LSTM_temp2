@@ -105,7 +105,8 @@ Or from an iPython notebook:
 ## Examine outputs
 Output files will be written to the `output` folder in a subdirectory named according to various model hyperparameters, the start/end dates of the training data, and the random number seed used.  `obs.npy` contains observations for the test time period, and `pred.npy` contains the test period predictions.  The model script is set up to run train the model for six different random number seeds (for size different random neural network weight initializations).
 
-#average together initializations
+###average together initializations
+
 ```
 #Change these file names to the appropriate ones
 initialization_preds = ['output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy',
@@ -127,7 +128,8 @@ init_means = np.mean(init_array, axis = 0)
 ```
 
 
-#to compare to observations
+###to compare to observations
+
 ```
 #load in observations, dropping degenerate third dimension
 obs = np.load('output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy')[:,:,0]
@@ -137,7 +139,8 @@ err = stat.statError(init_means, obs)
 
 ```
 
-#to compare to specific test sites
+### to compare to specific test sites
+
 ```
 #filter forcings to sites, based on test_filter column in experiments.csv
 attr_filtered_test = attr.query('dag == 60')
