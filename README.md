@@ -68,7 +68,7 @@ At this point, you can decide which experiment to replicate. `experiments.csv` i
 - hidden_sizes:  The sizes of hidden layers of the neural network.  Set these accordingly in StreamTemp-Integ.py
 - batch_size: Size of training batch.  Also set in StreamTemp-Integ.py
 
-To filter the sites and forcing data based on the first experiment in experiments.csv, and write the input files:
+Filter the sites and forcing data based on the `train_filter` field in the row of interest in experiments.csv, then write the input files. For example, for the first row in experiments.csv, `train_filter` is `dag >= 99`, so you can use that filter to create `attr_filtered`. Here we also name the output files ('forcing_99.feather' and 'attr_99.feather') to reflect that filter.
 ```
 os.makedirs('input/forcing', exist_ok = True)
 os.makedirs('input/attr', exist_ok = True)
