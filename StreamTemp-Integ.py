@@ -97,11 +97,8 @@ for seed in Randomseed:
         optLoss = default.optLossRMSE
         # define training options
         optTrain = default.update(default.optTrainCamels, miniBatch=[BATCH_SIZE, RHO], nEpoch=EPOCH, saveEpoch=saveEPOCH, seed=seed)
-        # define output folder for model results
-        #exap_name = 'output'
-        #exp_disp = 'demo'
-
-
+        
+	# define output folder for model results
         save_path = os.path.join(rootOut, \
                     'epochs{}_batch{}_rho{}_hiddensize{}_Tstart{}_Tend{}_{}'.format(optTrain['nEpoch'], optTrain['miniBatch'][0],
                                                                                   optTrain['miniBatch'][1],

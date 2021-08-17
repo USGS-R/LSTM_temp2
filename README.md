@@ -72,7 +72,7 @@ To filter the sites and forcing data based on the first experiment in experiment
 ```
 os.makedirs('input/forcing', exist_ok = True)
 os.makedirs('input/attr', exist_ok = True)
-attr_filtered = attr.query('dag >= 60')
+attr_filtered = attr.query('dag >= 99')
 forcing_temp_renamed_filter = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered['site_no'])]
 forcing_temp_renamed_filter.reset_index().to_feather('input/forcing/forcing_99.feather', version = 1)
 attr_filtered.reset_index().to_feather('input/attr/attr_99.feather', version = 1)
@@ -142,7 +142,7 @@ err = stat.statError(init_means, obs)
 
 ```
 #filter forcings to sites, based on test_filter column in experiments.csv
-attr_filtered_test = attr.query('dag == 60')
+attr_filtered_test = attr.query('dag == 99')
 attr_filtered
 forcing_temp_renamed_filter_test = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered_test['site_no'])]
 forcing_temp_renamed_filter_test.reset_index().to_feather('input/forcing/forcing_99_test.feather', version = 1)
