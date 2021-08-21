@@ -10,8 +10,8 @@ import json
 from . import Dataframe
 
 # module variable
-tRange = [19800101, 20200101]
-tRangeobs = [19800101, 20200101]    #[19801001, 20161001] #  streamflow observations
+tRange = [20101001, 20161001]
+tRangeobs = [20101001, 20161001]    #[19801001, 20161001] #  streamflow observations
 tLst = utils.time.tRange2Array(tRange)
 tLstobs = utils.time.tRange2Array(tRangeobs)
 nt = len(tLst)
@@ -502,7 +502,6 @@ class DataframeCamels(Dataframe):
         if type(varLst) is str:
             varLst = [varLst]
         # read ts forcing
-        #rootDatabase = os.path.join(os.path.sep, absRoot, 'scratch', 'SNTemp')
         inputfiles = os.path.join(forcing_path)   #   forcing_350days_T_S_GAGESII
         dfMain = pd.read_feather(inputfiles)
         inputfiles = os.path.join(attr_path)       #   attr_350days_T_S_GAGESII

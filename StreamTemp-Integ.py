@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../') #('C://Users//fzr5082//Desktop//hydroDL-dev-master//hydroDL-dev-master')   #('../')
+sys.path.append('../') 
 from hydroDL import master, utils
 from hydroDL.master import default
 #from hydroDL.post import plot, stat
@@ -16,16 +16,12 @@ import pandas as pd
 import math
 import random
 
-forcing_list = [
-                'forcing_99%_days_99sites.feather'
-                ]
-attr_list = [
-             'attr_temp99%_days_99sites.feather'
-             ]
+forcing_list = ['forcing_99%_days_99sites_newv1.feather']
+attr_list = ['attr_temp99%_days_99sites_newv1.feather']
 
 Batch_list = [ 47]
 Hidden_list = [100, 100, 100]
-Randomseed = [ 1, 2, 3, 4, 5]
+Randomseed = [8,9,10,11,12,13]
 for seed in Randomseed:
     for f_list, a_list, b_list, h_list in zip(forcing_list, attr_list, Batch_list, Hidden_list):
 
@@ -48,7 +44,7 @@ for seed in Randomseed:
         BATCH_SIZE = b_list
         RHO = 365
         HIDDENSIZE = h_list
-        saveEPOCH = 100   # it was 50
+        saveEPOCH = 200   # it was 50
         Ttrain = [20101001, 20141001]  # Training period. it was [19851001, 19951001]
 
         #### Set hyperparameters for Pre-training the model #####
@@ -68,13 +64,17 @@ for seed in Randomseed:
 
         # Define root directory of database and output
         # Modify this based on your own location
-        rootDatabase = os.path.join(os.path.sep, absRoot, 'scratch', 'SNTemp')  # CAMELS dataset root directory: /scratch/Camels
-        rootOut = os.path.join(os.path.sep, absRoot, 'TempDemo', 'FirstRun')  # Model output root directory: /data/rnnStreamflow
+        rootDatabase = os.path.join(os.path.sep, absRoot, 'input')  # CAMELS dataset root directory: /scratch/Camels
+        rootOut = os.path.join(os.path.sep, absRoot, 'output')  # Model output root directory: /data/rnnStreamflow
 
-        forcing_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'Forcing_new', f_list)  # obs_18basins
-        forcing_data =[]#pd.read_feather(forcing_path)
-        attr_path = os.path.join(os.path.sep, rootDatabase, 'Forcing', 'attr_new', a_list)
-        attr_data =[]#pd.read_feather(attr_path)
+        forcing_path = os.path.join(os.path.sep, rootDatabase, 'forcing', f_list)  # obs_18basins
+        attr_path = os.path.join(os.path.sep, rootDatabase, 'attr', a_list)
+        if os.path.exists(os.path.join(os.path.sep, rootDatabase, 'Statistics_basinnorm.json')):
+          forcing_data =[]
+          attr_data =[]
+        else:
+          forcing_data = pd.read_feather(forcing_path)
+          attr_data = pd.read_feather(attr_path)	
         camels.initcamels(forcing_data, attr_data, TempTarget, rootDatabase)  # initialize three camels module-scope variables in camels.py: dirDB, gageDict, statDict
 
 
@@ -97,12 +97,9 @@ for seed in Randomseed:
         optLoss = default.optLossRMSE
         # define training options
         optTrain = default.update(default.optTrainCamels, miniBatch=[BATCH_SIZE, RHO], nEpoch=EPOCH, saveEpoch=saveEPOCH, seed=seed)
-        # define output folder for model results
-        exp_name = 'TempDemo'
-        exp_disp = 'FirstRun'
-
-
-        save_path = os.path.join(absRoot, exp_name, exp_disp, \
+        
+	# define output folder for model results
+        save_path = os.path.join(rootOut, \
                     'epochs{}_batch{}_rho{}_hiddensize{}_Tstart{}_Tend{}_{}'.format(optTrain['nEpoch'], optTrain['miniBatch'][0],
                                                                                   optTrain['miniBatch'][1],
                                                                                   optModel['hiddenSize'],
@@ -111,7 +108,7 @@ for seed in Randomseed:
 
         ##############################################################
         # save path and out for saving results for when had some pretraining  ####
-        pre_save_path = os.path.join(absRoot, exp_name, exp_disp, \
+        pre_save_path = os.path.join(rootOut, \
                                                  'epochs{}_batch{}_rho{}_hiddensize{}_Tstart{}_Tend{}'.format(
                                                      pre_EPOCH,
                                                      pre_BATCH_SIZE,
@@ -161,7 +158,10 @@ for seed in Randomseed:
                 torch.backends.cudnn.deterministic = True
                 torch.backends.cudnn.benchmark = False
 
-
+                print("optData: ", optData)
+                print("TempTarget: ", TempTarget)
+                print("forcing_path: ", forcing_path)
+                print("attr_path: ", attr_path)
 
                 # load data
                 df, x, y, c = master.loadData(optData, TempTarget, forcing_path, attr_path, out)  # df: CAMELS dataframe; x: forcings; y: streamflow obs; c:attributes
@@ -170,7 +170,6 @@ for seed in Randomseed:
                 # ny: number of target variables, nc: number of constant attributes
                 nx = x.shape[-1] + c.shape[-1]  # update nx, nx = nx + nc
                 ny = y.shape[-1]
-                #path = os.path.join('G:\Farshid\CONUS_Temp\Example3\TempDemo\FirstRun\epochs2000_batch686_rho365_hiddensize100_Tstart20101001_Tend20141001\All-2010-2016\\model_Ep1500.pt')
                # model = torch.load(path)
                 # load model for training
                 if retrained == False:

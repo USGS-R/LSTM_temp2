@@ -1,0 +1,19 @@
+#some of these may still be checked in; also using this
+#to ignore files when zipping repo for data release
+*.ipynb
+run_lstm_check_results.ipynb
+*.out
+lstmbatch.out
+lstmjlab.out
+.idea/
+.ipynb_checkpoints/
+__pycache__/
+hydroDL/*/__pycache__/
+hydroDL/*/.ipynb_checkpoints/
+*.pyc
+*.sql
+*.feather
+TempDemo/
+input/
+tmp/
+output/

@@ -8,9 +8,6 @@ import numpy as np
 import random
 import numpy as np
 
-#target = torch.load(r'E:\Downloads\target.pt')
-#output = torch.load(r'E:\Downloads\output.pt')
-
 def nanmean(v, mask, *args, inplace=False, **kwargs):
     if not inplace:
         v = v.clone()
