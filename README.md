@@ -29,8 +29,6 @@ sb.get_item_files(sb.get_item('6084cab2d34eadd49d31aeab'), 'datarelease') # mode
 sb.get_item_files(sb.get_item('6084cb2ed34eadd49d31aeaf'), 'datarelease') #temperature predictions
 
 # Extract the zipfiles
-ZipFile('datarelease/gages.zip', 'r').extractall('datarelease')
-ZipFile('datarelease/basins.zip', 'r').extractall('datarelease')
 ZipFile('datarelease/predictions.zip', 'r').extractall('datarelease')
 ```
 
@@ -94,6 +92,21 @@ the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 23 Hidden_list = [100]
  ```
 
+If desired, you can change the number of epochs and number of random number 
+ seeds used.  The LSTM model is trained (in serial) for each seed over the 
+ specified number of epochs. The script is configured to run 2000 epochs for six 
+ different seeds by default.
+ 
+Seeds are set on line 24 or `StreamTemp-Integ.py`:
+```
+    Randomseed = [8,9,10,11,12,13]
+```
+
+Epochs are set on line 43:
+```
+    EPOCH = 2000
+```
+ 
 Now you can train and make predictions with the model.
 
 From a terminal:
@@ -131,6 +144,7 @@ init_means = np.mean(init_array, axis = 0)
 
 ```
 #load in observations, dropping degenerate third dimension
+#change file name to yours
 obs = np.load('output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy')[:,:,0]
 #generate variety of metrics, or write own code as desired
 from hydroDL.post import plot, stat
@@ -156,8 +170,9 @@ Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file nam
  
 Now compare the predictions and observations as before:
 ```
-obs = np.load('TempDemo/FirstRun/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/obs.npy')[:,:,0]
-pred = np.load('TempDemo/FirstRun/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/pred.npy')[:,:,0]
+#change file names to your outputs
+obs = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/obs.npy')[:,:,0]
+pred = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/pred.npy')[:,:,0]
 
 pred.shape
 obs.shape

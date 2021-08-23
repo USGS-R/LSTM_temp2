@@ -12,6 +12,7 @@ hydroDL/*/__pycache__/
 hydroDL/*/.ipynb_checkpoints/
 *.pyc
 *.sql
+.Rproj.user
 *.feather
 TempDemo/
 input/
