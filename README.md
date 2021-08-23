@@ -92,7 +92,7 @@ the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 23 Hidden_list = [100]
  ```
 
-If desired, you can change the number of epochs and number of random number seeds used.  The model is trained (in serial) for each seed over the specified number of epochs.
+If desired, you can change the number of epochs and number of random number seeds used.  The LSTM model is trained (in serial) for each seed over the specified number of epochs.
  
 Seeds are set on line 24 or `StreamTemp-Integ.py`:
 ```
