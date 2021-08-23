@@ -92,7 +92,10 @@ the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 23 Hidden_list = [100]
  ```
 
-If desired, you can change the number of epochs and number of random number seeds used.  The LSTM model is trained (in serial) for each seed over the specified number of epochs.
+If desired, you can change the number of epochs and number of random number 
+ seeds used.  The LSTM model is trained (in serial) for each seed over the 
+ specified number of epochs. The script is configured to run 2000 epochs for six 
+ different seeds by default.
  
 Seeds are set on line 24 or `StreamTemp-Integ.py`:
 ```
@@ -101,7 +104,7 @@ Seeds are set on line 24 or `StreamTemp-Integ.py`:
 
 Epochs are set on line 43:
 ```
-    EPOCH = 100
+    EPOCH = 2000
 ```
  
 Now you can train and make predictions with the model.
