@@ -29,8 +29,6 @@ sb.get_item_files(sb.get_item('6084cab2d34eadd49d31aeab'), 'datarelease') # mode
 sb.get_item_files(sb.get_item('6084cb2ed34eadd49d31aeaf'), 'datarelease') #temperature predictions
 
 # Extract the zipfiles
-ZipFile('datarelease/gages.zip', 'r').extractall('datarelease')
-ZipFile('datarelease/basins.zip', 'r').extractall('datarelease')
 ZipFile('datarelease/predictions.zip', 'r').extractall('datarelease')
 ```
 
