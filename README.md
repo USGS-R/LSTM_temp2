@@ -144,6 +144,7 @@ init_means = np.mean(init_array, axis = 0)
 
 ```
 #load in observations, dropping degenerate third dimension
+#change file name to yours
 obs = np.load('output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy')[:,:,0]
 #generate variety of metrics, or write own code as desired
 from hydroDL.post import plot, stat
@@ -169,6 +170,7 @@ Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file nam
  
 Now compare the predictions and observations as before:
 ```
+#change file names to your outputs
 obs = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/obs.npy')[:,:,0]
 pred = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/pred.npy')[:,:,0]
 
