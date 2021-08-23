@@ -92,6 +92,18 @@ the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 23 Hidden_list = [100]
  ```
 
+If desired, you can change the number of epochs and number of random number seeds used.  The model is trained (in serial) for each seed over the specified number of epochs.
+ 
+Seeds are set on line 24 or `StreamTemp-Integ.py`:
+```
+    Randomseed = [8,9,10,11,12,13]
+```
+
+Epochs are set on line 43:
+```
+    EPOCH = 100
+```
+ 
 Now you can train and make predictions with the model.
 
 From a terminal:
@@ -154,8 +166,8 @@ Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file nam
  
 Now compare the predictions and observations as before:
 ```
-obs = np.load('TempDemo/FirstRun/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/obs.npy')[:,:,0]
-pred = np.load('TempDemo/FirstRun/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/pred.npy')[:,:,0]
+obs = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/obs.npy')[:,:,0]
+pred = np.load('output/epochs2000_batch50_rho365_hiddensize100_Tstart20101001_Tend20141001_8/All-2010-2016/pred.npy')[:,:,0]
 
 pred.shape
 obs.shape
