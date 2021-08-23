@@ -20,7 +20,7 @@ dependencies:
   - brotlipy=0.7.0=py37h27cfd23_1003
   - bzip2=1.0.8=h7b6447c_0
   - c-ares=1.17.1=h27cfd23_0
-  - ca-certificates=2021.5.25=h06a4308_1
+  - ca-certificates=2021.7.5=h06a4308_1
   - certifi=2021.5.30=py37h06a4308_0
   - cffi=1.14.5=py37h261ae71_0
   - chardet=4.0.0=py37h06a4308_1003
@@ -88,8 +88,8 @@ dependencies:
   - libxml2=2.9.10=hb55368b_3
   - lz4-c=1.9.3=h2531618_0
   - markupsafe=2.0.1=py37h27cfd23_0
-  - matplotlib=3.0.3=py37h5429711_0
-  - matplotlib-base=3.3.4=py37h62a2d02_0
+  - matplotlib=2.2.2=py37hb69df0a_2
+  - matplotlib-base=3.1.2=py37hef1b27d_1
   - mistune=0.8.4=py37h14c3975_1001
   - mkl=2020.2=256
   - mkl-service=2.3.0=py37he8ac12f_0
