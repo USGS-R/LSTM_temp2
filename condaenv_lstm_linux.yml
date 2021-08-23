@@ -89,7 +89,7 @@ dependencies:
   - lz4-c=1.9.3=h2531618_0
   - markupsafe=2.0.1=py37h27cfd23_0
   - matplotlib=2.2.2=py37hb69df0a_2
-  - matplotlib-base=3.3.4=py37h62a2d02_0
+  - matplotlib-base=3.1.2=py37hef1b27d_1
   - mistune=0.8.4=py37h14c3975_1001
   - mkl=2020.2=256
   - mkl-service=2.3.0=py37he8ac12f_0
