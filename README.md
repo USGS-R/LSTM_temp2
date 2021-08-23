@@ -29,8 +29,6 @@ sb.get_item_files(sb.get_item('6084cab2d34eadd49d31aeab'), 'datarelease') # mode
 sb.get_item_files(sb.get_item('6084cb2ed34eadd49d31aeaf'), 'datarelease') #temperature predictions
 
 # Extract the zipfiles
-ZipFile('datarelease/gages.zip', 'r').extractall('datarelease')
-ZipFile('datarelease/basins.zip', 'r').extractall('datarelease')
 ZipFile('datarelease/predictions.zip', 'r').extractall('datarelease')
 ```
 
@@ -56,25 +54,26 @@ temperature = pd.read_csv('datarelease/temperature_observations.csv')
 forcing = pd.read_csv('datarelease/forcings.csv')
 
 forcing_temp = forcing.merge(temperature, how = 'outer')
-forcing_temp_renamed = forcing_temp.rename(columns={"discharge(cfs)" : "00060_Mean", "wtemp(C)" : "00010_Mean"})
+forcing_temp_renamed = forcing_temp.rename(columns={"discharge(cfs)" : "00060_Mean", "wtemp(C)" : "00010_Mean", "dayl(s/d)" : "dayl(s)", "prcp(mm/d)" :"prcp(mm/day)"})
 
 ```
 ### Explanation of different experiments
 
-At this point, you can decide which experiment to replicate.`experiments.csv` in the data release describes the various experiments run in this data release.  These columns are most important:
+At this point, you can decide which experiment to replicate. `experiments.csv` in the data release describes the various experiments run in this data release. These columns are most important:
 
 - train_filter: Apply this filter to forcing data to filter out training and test data
 - test_filter: apply this filter to get *only* the test data. Test/train time period split is handled internally in the modeling code when running, use this to extract sites for a particular test set when checking performance.
 - hidden_sizes:  The sizes of hidden layers of the neural network.  Set these accordingly in StreamTemp-Integ.py
 - batch_size: Size of training batch.  Also set in StreamTemp-Integ.py
 
-To filter the sites and forcing data based on the first experiment in experiments.csv, and write the input files:
+Filter the sites and forcing data based on the `train_filter` field in the row of interest in experiments.csv, then write the input files. For example, for the first row in experiments.csv, `train_filter` is `dag >= 99`, so you can use that filter to create `attr_filtered`. Here we also name the output files ('forcing_99.feather' and 'attr_99.feather') to reflect that filter.
 ```
-attr_filtered = attr.query('dag >= 60')
-attr_filtered
+os.makedirs('input/forcing', exist_ok = True)
+os.makedirs('input/attr', exist_ok = True)
+attr_filtered = attr.query('dag >= 99')
 forcing_temp_renamed_filter = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered['site_no'])]
-forcing_temp_renamed_filter.reset_index().to_feather('in/forcing/forcing_99.feather', version = 1)
-attr_filtered.reset_index().to_feather('in/attr/attr_99.feather', version = 1)
+forcing_temp_renamed_filter.reset_index().to_feather('input/forcing/forcing_99.feather', version = 1)
+attr_filtered.reset_index().to_feather('input/attr/attr_99.feather', version = 1)
 ```
 
 Now you are almost ready to run the model code.
@@ -82,8 +81,8 @@ Now you are almost ready to run the model code.
 ## Run model
 
 First, set the forcing file name, site attributes name, batch size and hidden layer 
-sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here,
-the directory (`in`) is specified elsewhere.
+sizes in StreamTemp-Integ.py on the line numbers shown.  Note that you only specify the base filename here;
+the directories (`input/forcing` and `input/attr`) are specified elsewhere.
 
 ```
 19 forcing_list = ['forcing_99.feather']
@@ -104,7 +103,8 @@ Or from an iPython notebook:
 ## Examine outputs
 Output files will be written to the `output` folder in a subdirectory named according to various model hyperparameters, the start/end dates of the training data, and the random number seed used.  `obs.npy` contains observations for the test time period, and `pred.npy` contains the test period predictions.  The model script is set up to run train the model for six different random number seeds (for size different random neural network weight initializations).
 
-#average together initializations
+### Average together initializations
+
 ```
 #Change these file names to the appropriate ones
 initialization_preds = ['output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy',
@@ -125,8 +125,8 @@ init_array = load_initializations(initialization_preds)
 init_means = np.mean(init_array, axis = 0) 
 ```
 
+### To compare to observations
 
-#to compare to observations
 ```
 #load in observations, dropping degenerate third dimension
 obs = np.load('output/epochs2000_batch47_rho365_hiddensize100_Tstart20101001_Tend20141001_1/All-2010-2016/pred.npy')[:,:,0]
@@ -136,20 +136,21 @@ err = stat.statError(init_means, obs)
 
 ```
 
-#to compare to specific test sites
+### To compare to specific test sites
+
 ```
 #filter forcings to sites, based on test_filter column in experiments.csv
-attr_filtered_test = attr.query('dag == 60')
+attr_filtered_test = attr.query('dag == 99')
 attr_filtered
 forcing_temp_renamed_filter_test = forcing_temp_renamed[forcing_temp_renamed['site_no'].isin(attr_filtered_test['site_no'])]
-forcing_temp_renamed_filter_test.reset_index().to_feather('in/forcing_99_test.feather', version = 1)
-attr_filtered.reset_index().to_feather('in/attr_99.feather_test', version = 1)
+forcing_temp_renamed_filter_test.reset_index().to_feather('input/forcing/forcing_99_test.feather', version = 1)
+attr_filtered.reset_index().to_feather('input/attr/attr_99_test.feather', version = 1)
 ```
 
 On line 41 of StreamTemp-Integ.py, set the `Action` variable to [2] to only make prediction, not train
 ` 41         Action = [0, 2]`
 
-Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file names.
+Set `forcing_list` and `attr_list` (lines 19-20, seen above) to the new file names, and run `StreamTemp-Integ.py` as described above.
  
 Now compare the predictions and observations as before:
 ```
