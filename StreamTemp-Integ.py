@@ -44,7 +44,7 @@ for seed in Randomseed:
         BATCH_SIZE = b_list
         RHO = 365
         HIDDENSIZE = h_list
-        saveEPOCH = 200   # it was 50
+        saveEPOCH = EPOCH / 5   # it was 50
         Ttrain = [20101001, 20141001]  # Training period. it was [19851001, 19951001]
 
         #### Set hyperparameters for Pre-training the model #####
@@ -266,7 +266,7 @@ for seed in Randomseed:
 
         # Test models
         if 2 in Action:
-            TestEPOCH = 2000     # it was 200  # choose the model to test after trained "TestEPOCH" epoches
+            TestEPOCH = EPOCH     # it was 200  # choose the model to test after trained "TestEPOCH" epoches
             # generate a folder name list containing all the tested model output folders
             caseLst = ['All-2010-2016']
             nDayLst = [] #[1, 3]
