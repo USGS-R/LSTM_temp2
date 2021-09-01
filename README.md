@@ -23,9 +23,9 @@ from zipfile import ZipFile
 sb = sciencebasepy.SbSession()
 sb.login(username, password) # enter your username and password. this is only necessary before the data are made public
 os.mkdir('datarelease')
-sb.get_item_files(sb.get_item('606db85fd34e670a7d5f61f0'), 'datarelease') # basins and gages
+sb.get_item_files(sb.get_item('606db85fd34e670a7d5f61f0'), 'datarelease') # watersheds and gages
 sb.get_item_files(sb.get_item('6083384fd34efe46ec0a2333'), 'datarelease') # temperature observations
-sb.get_item_files(sb.get_item('6084cab2d34eadd49d31aeab'), 'datarelease') # model drivers and basin attributes
+sb.get_item_files(sb.get_item('6084cab2d34eadd49d31aeab'), 'datarelease') # model drivers and watershed attributes
 sb.get_item_files(sb.get_item('6084cb2ed34eadd49d31aeaf'), 'datarelease') #temperature predictions
 
 # Extract the zipfiles
@@ -45,7 +45,7 @@ import numpy as np
 coords_shp = shapefile.Reader('datarelease/gages.shp')
 coords = pd.DataFrame(coords_shp.records(), columns=['site_no', 'site_name', 'lat', 'long']).\
     rename(columns={'long': 'lon'})
-attr = pd.read_csv('datarelease/basin_attributes.csv', dtype={'site_no': 'str'}).\
+attr = pd.read_csv('datarelease/watershed_attributes.csv', dtype={'site_no': 'str'}).\
     merge(coords, how='outer')
 attr['site_no'] = pd.to_numeric(attr['site_no']) #attr now includes coordinates
 
