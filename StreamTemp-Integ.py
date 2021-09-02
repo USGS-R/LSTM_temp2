@@ -40,11 +40,11 @@ for seed in Randomseed:
         # 2: test trained models
         Action = [0, 2]  # it was [0 , 1]
         # Set hyperparameters for training or retraining
-        EPOCH = 2000
+        EPOCH = 200
         BATCH_SIZE = b_list
         RHO = 365
         HIDDENSIZE = h_list
-        saveEPOCH = EPOCH / 5   # it was 50
+        saveEPOCH = int(EPOCH / 10)   # it was 50
         Ttrain = [20101001, 20141001]  # Training period. it was [19851001, 19951001]
 
         #### Set hyperparameters for Pre-training the model #####
